@@ -41,7 +41,7 @@ vim.opt.wrap = false
 -- persistent undo
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.vim/undodir")
-vim.opt.updatetime = 50
+vim.opt.updatetime = 150
 
 -- 24 bit color
 vim.termguicolors = true

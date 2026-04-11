@@ -6,5 +6,6 @@ vim.keymap.set("n", "<leader>m",
     else
       peek.open()
     end
-  end
+  end,
+  { desc = "Toggle markdown preview" }
 )

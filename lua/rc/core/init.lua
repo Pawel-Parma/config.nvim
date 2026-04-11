@@ -1,6 +1,4 @@
 require("rc.core.config")
 require("rc.core.remaps")
-require("rc.core.retab")
 require("rc.core.highlight")
-require("rc.core.formatonsave")
 require("rc.core.rememberpos")

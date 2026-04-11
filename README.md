@@ -15,6 +15,7 @@ My personal Nvim config
   - [Plugins](#plugins)
 
 # Installation
+<!-- TODO: update -->
 ## 1. Install requirements:
 - [ripgrep](https://github.com/BurntSushi/ripgrep#Installation) 
 - [fd](https://github.com/sharkdp/fd) 
@@ -45,6 +46,7 @@ To ensure that the installation procceded as expected, inside neovim run
 ```
 
 
+<!-- TODO: update -->
 # List of Changes 
 ## Plugins 
 - [goolord/alpha-nvim](https://github.com/goolord/alpha-nvim)  

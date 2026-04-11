@@ -10,13 +10,20 @@ return {
     local telescope = require("telescope")
     local builtin = require("telescope.builtin")
     local icons = require("mini.icons")
+    -- TODO: add C-j and C-k to move as C-n and C-p do
     telescope.setup({
       defaults = {
         hidden = true,
       },
       pickers = {
         find_files = {
-          find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git" },
+          find_command = {
+            "rg", "--files",
+            "--hidden",
+            "--glob", "!**/.git",
+            "--glob", "!**/venv/*",
+            "--glob", "!**/.venv/*",
+          },
         },
       },
       extensions = {

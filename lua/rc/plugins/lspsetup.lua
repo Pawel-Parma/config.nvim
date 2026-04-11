@@ -6,13 +6,36 @@ return {
     "mason-org/mason-lspconfig.nvim",
   },
   config = function()
+    local masonlsp = require("mason-lspconfig")
     local lsp = require("lsp-setup")
+
+    masonlsp.setup {
+      automatic_enable = false
+    }
+
     lsp.setup({
       default_mappings = false,
       inlay_hints = {
         enabled = true,
       },
       servers = {
+        -- TODO: smth broke
+        bashls = {},
+        clangd = {},
+        gopls = {},
+        texlab = {},
+        jsonls = {},
+        html = {},
+        cssls = {},
+        basedpyright = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              yamlVersion = "1.2.2"
+            }
+          }
+        },
+
         lua_ls = {
           on_init = function(client)
             if client.workspace_folders then
@@ -45,6 +68,7 @@ return {
             },
           },
         },
+
         ["zls@ZLS_PATH"] = {
           cmd = { os.getenv("ZLS_PATH") },
           settings = {
@@ -58,7 +82,33 @@ return {
             }
           }
         },
-        bashls = {},
+
+        ts_ls = {
+          init_options = {
+            preferences = {
+              quotePreference = "double",
+              importModuleSpecifierEnding = "js",
+            },
+          },
+          settings = {
+            typescript = {
+              format     = {
+                semicolons = "remove",
+                trimTrailingWhitespace = true,
+              },
+              inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+              },
+            },
+          },
+        },
       },
     })
 
@@ -84,9 +134,6 @@ return {
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-        vim.keymap.set({ "n", "x" }, "<leader>fo", function()
-          vim.lsp.buf.format({ async = true })
-        end, opts)
         vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)

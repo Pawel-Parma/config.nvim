@@ -11,7 +11,9 @@ return {
 
     masonlsp.setup {
       automatic_enable = false
+
     }
+
 
     lsp.setup({
       default_mappings = false,
@@ -31,7 +33,7 @@ return {
         yamlls = {
           settings = {
             yaml = {
-              yamlVersion = "1.2.2"
+              yamlVersion = "1.2.2",
             }
           }
         },
@@ -69,16 +71,14 @@ return {
           },
         },
 
-        ["zls@ZLS_PATH"] = {
-          cmd = { os.getenv("ZLS_PATH") },
+        zls = {
           settings = {
             zls = {
-              enable_inlay_hints = true,
+              enable_build_on_save = true,
               inlay_hints_show_builtin = true,
               inlay_hints_exclude_single_argument = true,
               inlay_hints_hide_redundant_param_names = true,
-              inlay_hints_hide_redundant_param_names_last_token = false,
-              enable_build_on_save = true,
+              inlay_hints_hide_redundant_param_names_last_token = true,
             }
           }
         },
@@ -111,6 +111,14 @@ return {
         },
       },
     })
+
+    vim.lsp.config("ebnfer", {
+      cmd = { vim.fn.has("win32") == 1 and "ebnfer.exe" or "ebnfer" },
+      filetypes = { "ebnf" },
+      root_markers = { ".ebnfer-root", ".git" },
+    })
+
+    vim.lsp.enable("ebnfer")
 
     vim.diagnostic.config({
       signs = false,

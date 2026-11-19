@@ -15,6 +15,7 @@ return {
       custom_highlights = function(colors)
         return {
           MyHeaderHighlight = { fg = colors.blue, bg = "none" },
+          LineNr = { fg = colors.overlay0 },
         }
       end,
     })

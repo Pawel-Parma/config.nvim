@@ -5,34 +5,21 @@ return {
   lazy = false,
   config = function()
     local treesitter = require("nvim-treesitter")
-    -- local treesitter_parsers = require('nvim-treesitter.parsers')
 
     treesitter.setup({})
 
-    -- Works:
-    vim.treesitter.language.add('mtl', {
-      path = vim.fn.expand('~/personal/coding/mtl/mtl/grammar/libtree-sitter-mtl.so'),
+    -- TODO: check if exists first
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'TSUpdate',
+      callback = function()
+        require('nvim-treesitter.parsers').mtl = {
+          install_info = {
+            path = vim.fn.expand('~/personal/coding/mtl/mtl/grammar/tree-sitter-mtl'),
+            queries = 'queries',
+          },
+        }
+      end
     })
-    vim.opt.runtimepath:append(vim.fn.expand('~/personal/coding/mtl/mtl/grammar'))
-
-    -- Doesn't work:
-    -- vim.api.nvim_create_autocmd('User', {
-    --   pattern = 'TSUpdate',
-    --   callback = function()
-    --     treesitter_parsers.mtl = {
-    --       install_info = {
-    --         path = vim.fn.expand('~/personal/coding/mtl/mtl/grammar'),
-    --         queries = 'queries',
-    --       },
-    --     }
-    --   end
-    -- })
-
-    vim.api.nvim_create_autocmd('FileType', {
-      pattern = { 'mtl' },
-      callback = function() vim.treesitter.start() end,
-    })
-
 
     treesitter.install {
       "bash",
@@ -44,7 +31,8 @@ return {
       "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore",
       "go", "gomod", "gosum",
       "lua", "luadoc",
-      -- "mtl",
+      -- TODO: line:23
+      "mtl",
       "markdown", "markdown_inline",
       "php",
       "python",
@@ -55,14 +43,39 @@ return {
       "zig",
     }
 
+    local prompted_langs = {}
     vim.api.nvim_create_autocmd('FileType', {
       callback = function(args)
         local lang = vim.treesitter.language.get_lang(args.match)
         if vim.treesitter.language.add(lang or args.match) then
           vim.treesitter.start(args.buf)
-          -- vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-          -- vim.wo[0][0].foldmethod = 'expr'
-          -- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(args.buf) then
+              vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+              vim.wo.foldmethod = 'expr'
+              vim.bo[args.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+            end
+          end)
+        else
+          if not lang or prompted_langs[lang] then
+            return
+          end
+          prompted_langs[lang] = true
+
+          local parser = require('nvim-treesitter.parsers')[lang]
+          if not parser then
+            return
+          end
+
+          vim.schedule(function()
+            vim.ui.select({ 'Yes', 'No' },
+              { prompt = string.format('Install treesitter parser for "%s"?', lang) },
+              function(choice)
+                if choice == 'Yes' then
+                  require('nvim-treesitter').install({ lang })
+                end
+              end)
+          end)
         end
       end,
     })

@@ -4,8 +4,10 @@ return {
     "neovim/nvim-lspconfig",
     "mason-org/mason.nvim",
     "mason-org/mason-lspconfig.nvim",
+    "Pawel-Parma/snacks.nvim",
   },
   config = function()
+    -- TODO: replace lspsetup with direct soluton
     local masonlsp = require("mason-lspconfig")
     local lsp = require("lsp-setup")
 
@@ -14,14 +16,14 @@ return {
 
     }
 
-
+    -- TODO:(#7) on first install prompt which lsps to install in checkbox manner
     lsp.setup({
       default_mappings = false,
       inlay_hints = {
         enabled = true,
       },
       servers = {
-        -- TODO: smth broke
+        markdown_oxide = {},
         bashls = {},
         clangd = {},
         gopls = {},
@@ -30,6 +32,14 @@ return {
         html = {},
         cssls = {},
         basedpyright = {},
+        ts_query_ls = {
+          settings = {
+            parser_install_directories = {
+              vim.fn.stdpath("data") .. "/site/parser",
+              vim.fn.expand('~/personal/coding/mtl/mtl/grammar'),
+            }
+          }
+        },
         yamlls = {
           settings = {
             yaml = {
@@ -112,12 +122,12 @@ return {
       },
     })
 
+    -- TODO: check if exists first
     vim.lsp.config("ebnfer", {
       cmd = { vim.fn.has("win32") == 1 and "ebnfer.exe" or "ebnfer" },
       filetypes = { "ebnf" },
       root_markers = { ".ebnfer-root", ".git" },
     })
-
     vim.lsp.enable("ebnfer")
 
     vim.diagnostic.config({
@@ -137,12 +147,22 @@ return {
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
-        vim.keymap.set("n", "ca", vim.lsp.buf.code_action, opts)
+        vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
-        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
-        vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+        vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, opts)
+
+        vim.keymap.set("n", "ca", vim.lsp.buf.code_action, opts)
+        -- vim.keymap.set("n", "<leader>r", function()
+        --   local snacks = require("snacks")
+        --   snacks.input.enable()
+        --   vim.lsp.buf.rename()
+        -- end, opts)
+        vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, opts)
+
+        local builtin = require("telescope.builtin")
+        vim.keymap.set("n", "<leader>ds", builtin.lsp_document_symbols, opts)
+        vim.keymap.set("n", "<leader>dw", function() builtin.diagnostics({ root_dir = true }) end, opts)
+        vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, opts)
         vim.keymap.set("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, opts)
       end,

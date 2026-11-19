@@ -32,10 +32,7 @@ return {
       callback = function()
         local args = vim.fn.argv()
         if #args == 0 or vim.fn.isdirectory(args[1]) == 1 then
-          if #vim.api.nvim_list_bufs() > 0 then
-            vim.cmd("bufdo bdelete")
-          end
-          alpha.start()
+          alpha.start(true)
         end
       end,
     })

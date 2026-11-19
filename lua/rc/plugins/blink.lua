@@ -1,4 +1,7 @@
-return { -- TODO: configure
+return {
+  -- TODO: configure
+  -- https://cmp.saghen.dev/configuration/general
+  -- https://cmp.saghen.dev/recipes
   'saghen/blink.cmp',
   -- dependencies = { 'rafamadriz/friendly-snippets' },
   version = '1.*',

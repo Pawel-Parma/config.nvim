@@ -29,6 +29,10 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 
+vim.opt.foldlevel = 9999
+vim.opt.foldlevelstart = 9999
+vim.opt.foldenable = true
+
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.expand("~/.vim/undodir")
 vim.opt.updatetime = 150

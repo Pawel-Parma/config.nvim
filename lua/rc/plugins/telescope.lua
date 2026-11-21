@@ -3,40 +3,30 @@ return {
   branch = "master",
   dependencies = {
     "nvim-mini/mini.icons",
-    -- "Parma/snacks.nvim",
     "nvim-lua/plenary.nvim",
-    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-    'nvim-telescope/telescope-ui-select.nvim',
+    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    "nvim-telescope/telescope-ui-select.nvim",
   },
-  config = function()
-    local telescope = require("telescope")
-    local builtin = require("telescope.builtin")
-    local themes = require("telescope.themes")
-    local previewers = require("telescope.previewers")
+  lazy = false,
+  opts = function()
     local actions = require("telescope.actions")
-    local icons = require("mini.icons")
-
-    telescope.setup({
+    local actions_layout = require("telescope.actions.layout")
+    local themes = require("telescope.themes")
+    return {
       defaults = {
         hidden = true,
         mappings = {
           i = {
-            ["<A-j>"] = actions.move_selection_next,
-            ["<A-k>"] = actions.move_selection_previous,
+            ["<A-j>"] = { actions.move_selection_next, opts = { desc = "Move selection next" } },
+            ["<A-k>"] = { actions.move_selection_previous, opts = { desc = "Move selection previous" } },
+            ["<M-p>"] = { actions_layout.toggle_preview, opts = { desc = "Toggle preview" } },
           },
           n = {
-            ["<A-j>"] = actions.move_selection_next,
-            ["<A-k>"] = actions.move_selection_previous,
+            ["<A-j>"] = { actions.move_selection_next, opts = { desc = "Move selection next" } },
+            ["<A-k>"] = { actions.move_selection_previous, opts = { desc = "Move selection previous" } },
+            ["<M-p>"] = { actions_layout.toggle_preview, opts = { desc = "Toggle preview" } },
           },
         },
-        buffer_previewer_maker = function(filepath, bufnr, opts)
-          local snacks = require("snacks")
-          if snacks.image.supports(filepath) then
-            snacks.image.buf.attach(bufnr, { src = filepath })
-          else
-            previewers.buffer_previewer_maker(filepath, bufnr, opts)
-          end
-        end,
       },
       pickers = {
         find_files = {
@@ -54,21 +44,25 @@ return {
         ["ui-select"] = {
           themes.get_dropdown({}),
         },
-      },
-      devicons = {
-        get = icons.mock_nvim_web_devicons()
       }
-    })
-
-    telescope.load_extension('fzf')
-    telescope.load_extension('ui-select')
-
-    vim.keymap.set("n", "<leader>fe", builtin.find_files, {})
-    vim.keymap.set("n", "<leader>fs", builtin.live_grep, {})
-    vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
-    vim.keymap.set("n", "<leader>fk", builtin.keymaps, {})
-    vim.keymap.set("n", "<leader>en", function()
-      builtin.find_files({ cwd = "~/.config/nvim", })
-    end)
+    }
+  end,
+  keys = {
+    { mode = "n", "<leader>fe", "<cmd>Telescope find_files<CR>", desc = "Find files" },
+    { mode = "n", "<leader>fs", "<cmd>Telescope live_grep<CR>",  desc = "Live grep" },
+    { mode = "n", "<leader>fh", "<cmd>Telescope help_tags<CR>",  desc = "Find Help tags" },
+    { mode = "n", "<leader>fk", "<cmd>Telescope keymaps<CR>",    desc = "Find keymaps" },
+    {
+      mode = "n",
+      "<leader>en",
+      function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end,
+      desc = "Find nvim files"
+    },
+  },
+  config = function(_, opts)
+    local telescope = require("telescope")
+    telescope.setup(opts)
+    telescope.load_extension("fzf")
+    telescope.load_extension("ui-select")
   end,
 }

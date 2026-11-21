@@ -28,6 +28,8 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
+vim.opt.textwidth = 135
+vim.opt.formatoptions:remove("t")
 
 vim.opt.foldlevel = 9999
 vim.opt.foldlevelstart = 9999
@@ -39,7 +41,7 @@ vim.opt.updatetime = 150
 
 vim.opt.termguicolors = true
 
-vim.opt.colorcolumn = "130"
+vim.opt.colorcolumn = "+0"
 vim.opt.signcolumn = "yes"
 
 vim.opt.cursorline = true

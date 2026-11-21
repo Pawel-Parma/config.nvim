@@ -1,12 +1,20 @@
 return {
   "m4xshen/hardtime.nvim",
   dependencies = { "MunifTanjim/nui.nvim" },
-  lazy = false,
-  config = function()
-    local hardtime = require("hardtime")
-    hardtime.setup({
-      restriction_mode = "hint",
-    })
-    vim.keymap.set("n", "<leader>i", "<cmd>Hardtime toggle<CR>")
-  end
+  cmd = "Hardtime",
+  opts = {
+    enabled = false,
+    -- restriction_mode = "hint",
+  },
+  keys = {
+    {
+      mode = "n",
+      "<leader>i",
+      function()
+        require("hardtime").toggle()
+      end
+      ,
+      desc = "Toggle hardtime.nvim"
+    },
+  },
 }

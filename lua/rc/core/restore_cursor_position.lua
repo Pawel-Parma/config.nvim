@@ -1,4 +1,4 @@
-local group = vim.api.nvim_create_augroup("RestoreCursorPosition", { clear = true })
+local group = vim.api.nvim_create_augroup("URestoreCursorPosition", { clear = true })
 
 vim.api.nvim_create_autocmd("BufLeave", {
   group = group,

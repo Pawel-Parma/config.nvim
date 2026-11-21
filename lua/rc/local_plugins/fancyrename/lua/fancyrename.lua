@@ -169,13 +169,6 @@ end
 function M.setup(opts)
   M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
 
-  vim.keymap.set("n", "<leader>ss", function()
-    M.input({ default = vim.fn.expand "<cword>" }, function()
-      vim.notify("#676767")
-    end)
-  end)
-
-
   if M.opts.enable then
     M.enable()
   end

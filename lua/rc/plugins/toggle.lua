@@ -1,23 +1,18 @@
 return {
   "leblocks/toggle.nvim",
-  config = function()
-    local toggle = require("toggle")
-    toggle.setup({
-      defaults = false,
-      mappings = {
-        { "true", "false" },
+  opts = {
+    defaults = false,
+    mappings = {
+      { "true", "false" },
+    },
+    mappings_by_filetype = {
+      python = {
+        { "True", "False" },
       },
-      mappings_by_filetype = {
-        python = {
-          { "True", "False" },
-        },
-      },
-    })
-    toggle.toggle_back = function()
-      toggle.toggle(true)
-    end
-
-    vim.keymap.set("n", "<leader>tt", toggle.toggle)
-    vim.keymap.set("n", "<leader>tT", toggle.toggle_back)
-  end
+    },
+  },
+  keys = {
+    { mode = "n", "<leader>tt", function() require("toggle").toggle() end,     desc = "Toggle value forwards" },
+    { mode = "n", "<leader>tT", function() require("toggle").toggle(true) end, desc = "Toggle value backwards" },
+  },
 }

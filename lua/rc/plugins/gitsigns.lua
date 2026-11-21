@@ -1,10 +1,17 @@
 return {
   "lewis6991/gitsigns.nvim",
-  config = function()
-    local gitsigns = require("gitsigns")
-    gitsigns.setup {
-      attach_to_untracked = true,
-    }
-    vim.keymap.set("n", "<leader>p", gitsigns.preview_hunk)
-  end
+  event = { "BufReadPre", "BufNewFile" },
+  opts = {
+    attach_to_untracked = true,
+  },
+  keys = {
+    {
+      mode = "n",
+      "<leader>p",
+      function()
+        require("gitsigns").preview_hunk()
+      end,
+      desc = "Preview git hunk",
+    },
+  },
 }

@@ -2,11 +2,11 @@ return {
   -- TODO: configure
   -- https://cmp.saghen.dev/configuration/general
   -- https://cmp.saghen.dev/recipes
-  'saghen/blink.cmp',
-  -- dependencies = { 'rafamadriz/friendly-snippets' },
-  version = '1.*',
+  "saghen/blink.cmp",
+  -- dependencies = { "rafamadriz/friendly-snippets" },
+  version = "1.*",
   opts = {
-    keymap = { preset = 'super-tab' },
+    keymap = { preset = "super-tab" },
     completion = {
       accept = {
         auto_brackets = {

@@ -1,10 +1,11 @@
 return {
   "folke/todo-comments.nvim",
   dependencies = { "nvim-lua/plenary.nvim" },
-  config = function()
-    local todo = require("todo-comments")
-    todo.setup()
-    vim.keymap.set("n", "<leader>ts", function() vim.cmd [[:TodoTelescope keywords=TODO,FIX]] end, {})
-    vim.keymap.set("n", "<leader>ct", ":TodoQuickFix<CR>")
-  end
+  event = { "BufReadPre", "BufNewFile" },
+  cmd = { "TodoTelescope", "TodoQuickFix" },
+  opts = {},
+  keys = {
+    { mode = "n", "<leader>ts", "<cmd>TodoTelescope keywords=TODO,FIX<CR>", desc = "Search TODO/FIX comments" },
+    { mode = "n", "<leader>qt", ":TodoQuickFix<CR>",                        desc = "Open TODOs in quickfix" }
+  },
 }

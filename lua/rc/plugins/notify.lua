@@ -1,11 +1,14 @@
 return {
   "rcarriga/nvim-notify",
-  config = function()
-    local notify = require("notify")
-    notify.setup({
-      top_down = false,
-      background_colour = "#000000",
-    })
-    vim.notify = notify
-  end
+  lazy = true,
+  opts = {
+    top_down = false,
+  },
+  init = function()
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.notify = function(...)
+      vim.notify = require("notify")
+      return vim.notify(...)
+    end
+  end,
 }

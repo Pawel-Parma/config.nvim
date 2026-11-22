@@ -13,6 +13,7 @@ return {
       "toml", "xml", "yaml",
       "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore",
       "go", "gomod", "gosum",
+      "json",
       "lua", "luadoc",
       "markdown", "markdown_inline",
       "php",

@@ -1,5 +1,5 @@
 return {
-  -- TODO: add some debugging plugins
+  -- TODO: add some debugging plugins? Mayby its better to learn gdb?
   -- "jay-babu/mason-nvim-dap.nvim",
   -- "mfussenegger/nvim-dap",
   -- "rcarriga/nvim-dap-ui",

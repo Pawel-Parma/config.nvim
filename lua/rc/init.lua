@@ -1,2 +1,2 @@
 require("rc.core")
-require("rc.lazy")
+require("rc.lazysetup")

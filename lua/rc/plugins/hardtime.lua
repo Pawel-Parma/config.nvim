@@ -9,7 +9,7 @@ return {
   keys = {
     {
       mode = "n",
-      "<leader>i",
+      "<leader>th",
       function()
         require("hardtime").toggle()
       end

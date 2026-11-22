@@ -2,7 +2,14 @@ return {
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     dependencies = { "mason-org/mason.nvim" },
-    event = "VeryLazy",
+    build = ":MasonToolsInstall",
+    cmd = {
+      "MasonToolsClean",
+      "MasonToolsInstall",
+      "MasonToolsInstallSync",
+      "MasonToolsUpdate",
+      "MasonToolsUpdateSync",
+    },
     opts = {
       ensure_installed = {
         "sleek",
@@ -13,9 +20,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    dependencies = {
-      "mason-org/mason.nvim",
-    },
+    dependencies = { "mason-org/mason.nvim" },
     event = { "BufWritePre" },
     opts = {
       formatters_by_ft = {

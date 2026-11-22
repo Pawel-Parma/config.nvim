@@ -14,6 +14,6 @@ return {
     }
   end,
   keys = {
-    { mode = "n", "<leader>o", ":Twilight<CR>", desc = "Toggle code dim" },
+    { mode = "n", "<leader>td", ":Twilight<CR>", desc = "Toggle code dimming" },
   },
 }

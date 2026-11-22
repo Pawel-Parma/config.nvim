@@ -1,5 +1,6 @@
 return {
   "mason-org/mason.nvim",
+  build = ":MasonUpdate",
   cmd = {
     "Mason",
     "MasonUpdate",
@@ -8,6 +9,9 @@ return {
     "MasonUninstallAll",
     "MasonLog",
   },
-  build = ":MasonUpdate",
-  opts = {},
+  opts = {
+    ui = {
+      border = "rounded",
+    },
+  },
 }

@@ -7,7 +7,9 @@ return {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-telescope/telescope-ui-select.nvim",
   },
-  lazy = false,
+  cmd = {
+    "Telescope",
+  },
   opts = function()
     local actions = require("telescope.actions")
     local actions_layout = require("telescope.actions.layout")
@@ -19,12 +21,12 @@ return {
           i = {
             ["<A-j>"] = { actions.move_selection_next, opts = { desc = "Move selection next" } },
             ["<A-k>"] = { actions.move_selection_previous, opts = { desc = "Move selection previous" } },
-            ["<M-p>"] = { actions_layout.toggle_preview, opts = { desc = "Toggle preview" } },
+            ["<A-p>"] = { actions_layout.toggle_preview, opts = { desc = "Toggle preview" } },
           },
           n = {
             ["<A-j>"] = { actions.move_selection_next, opts = { desc = "Move selection next" } },
             ["<A-k>"] = { actions.move_selection_previous, opts = { desc = "Move selection previous" } },
-            ["<M-p>"] = { actions_layout.toggle_preview, opts = { desc = "Toggle preview" } },
+            ["<A-p>"] = { actions_layout.toggle_preview, opts = { desc = "Toggle preview" } },
           },
         },
       },
@@ -47,6 +49,13 @@ return {
       }
     }
   end,
+  init = function()
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.ui.select = function(...)
+      require("lazy").load({ plugins = { "telescope.nvim" } })
+      return vim.ui.select(...)
+    end
+  end,
   keys = {
     { mode = "n", "<leader>fe", "<cmd>Telescope find_files<CR>", desc = "Find files" },
     { mode = "n", "<leader>fs", "<cmd>Telescope live_grep<CR>",  desc = "Live grep" },
@@ -56,6 +65,12 @@ return {
       mode = "n",
       "<leader>en",
       function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end,
+      desc = "Find nvim files"
+    },
+    {
+      mode = "n",
+      "<leader>ed",
+      function() require("telescope.builtin").find_files({ cwd = vim.fn.expand("~/.dotfiles") }) end,
       desc = "Find nvim files"
     },
   },

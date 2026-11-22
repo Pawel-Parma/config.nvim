@@ -2,7 +2,7 @@
 My personal Nvim config
 
 > [!important] 
-> Requires Neovim v0.13.0
+> Requires Neovim v0.13.0-dev-2905+g21c75af898
 
 ## Table of Contents
 - [Installation](#installation)
@@ -52,6 +52,7 @@ To ensure that the installation procceded as expected, inside neovim run
 - [laytan/cloak.nvim](https://github.com/laytan/cloak.nvim)  
 - [ej-shafran/compile-mode.nvim](https://github.com/ej-shafran/compile-mode.nvim)
 - [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim)
+- [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
 - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 - [m4xshen/hardtime.nvim](https://github.com/m4xshen/hardtime.nvim)
 - [theprimeagen/harpoon](https://github.com/theprimeagen/harpoon)  
@@ -63,6 +64,7 @@ To ensure that the installation procceded as expected, inside neovim run
 - [nvim-mini/mini.icons](https://github.com/nvim-mini/mini.icons)
 - [MunifTanjim/nui.nvim](https://github.com/MunifTanjim/nui.nvim)
 - [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs)
+- [code-biscuits/nvim-biscuits](https://github.com/code-biscuits/nvim-biscuits)
 - [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - [rcarriga/nvim-notify](https://github.com/rcarriga/nvim-notify)
 - [kylechui/nvim-surround](https://github.com/kylechui/nvim-surround)

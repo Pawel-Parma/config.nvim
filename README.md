@@ -52,6 +52,7 @@ To ensure that the installation procceded as expected, inside neovim run
 - [laytan/cloak.nvim](https://github.com/laytan/cloak.nvim)  
 - [ej-shafran/compile-mode.nvim](https://github.com/ej-shafran/compile-mode.nvim)
 - [stevearc/conform.nvim](https://github.com/stevearc/conform.nvim)
+- [stevearc/dressing.nvim](https://github.com/stevearc/dressing.nvim)
 - [rafamadriz/friendly-snippets](https://github.com/rafamadriz/friendly-snippets)
 - [lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)
 - [m4xshen/hardtime.nvim](https://github.com/m4xshen/hardtime.nvim)

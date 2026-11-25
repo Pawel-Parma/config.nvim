@@ -12,8 +12,9 @@ return {
     show_end_of_buffer = true,
     custom_highlights = function(colors)
       return {
-        MyHeaderHighlight = { fg = colors.blue, bg = "none" },
         LineNr = { fg = colors.overlay0 },
+        MyHeaderHighlight = { fg = colors.blue, bg = "none" }, -- alpha-nvim
+        CompileModeCommandOutput = { fg = colors.pink },       -- compile-mode.nvim
       }
     end,
   },

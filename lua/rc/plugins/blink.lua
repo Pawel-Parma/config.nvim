@@ -12,7 +12,7 @@ return {
     completion = {
       accept = {
         auto_brackets = {
-          enabled = true
+          enabled = true,
         },
       },
       menu = {
@@ -20,7 +20,9 @@ return {
         direction_priority = function()
           local ctx = require("blink.cmp").get_context()
           local item = require("blink.cmp").get_selected_item()
-          if ctx == nil or item == nil then return { "s", "n" } end
+          if ctx == nil or item == nil then
+            return { "s", "n" }
+          end
 
           local item_text = item.textEdit ~= nil and item.textEdit.newText or item.insertText or item.label
           local is_multi_line = item_text:find("\n") ~= nil
@@ -38,8 +40,8 @@ return {
               text = function(ctx)
                 return tostring(ctx.idx)
               end,
-            }
-          }
+            },
+          },
         },
       },
       documentation = {
@@ -79,6 +81,12 @@ return {
         ["<Tab>"] = { "show_and_insert_or_accept_single", "select_next" },
       },
       completion = {
+        list = {
+          selection = {
+            preselect = false,
+            auto_insert = true,
+          },
+        },
         menu = {
           auto_show = function()
             return vim.fn.getcmdtype() == ":" and #vim.fn.getcmdline() >= 4

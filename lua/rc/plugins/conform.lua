@@ -12,9 +12,10 @@ return {
     },
     opts = {
       ensure_installed = {
-        "sleek",
         "beautysh",
-        "clang-format"
+        "clang-format",
+        "sleek",
+        "stylua",
       },
     },
   },
@@ -24,18 +25,30 @@ return {
     event = { "BufWritePre" },
     opts = {
       formatters_by_ft = {
-        sql = { "sleek" },
         sh = { "beautysh" },
         c = { "clang-format" },
         cpp = { "clang-format" },
+        sql = { "sleek" },
+        lua = { "stylua " },
       },
       formatters = {
         ["clang-format"] = {
           prepend_args = {
-            "--style=file",
-            "--fallback-style={BasedOnStyle: LLVM, ColumnLimit: "
-            .. vim.o.textwidth
-            .. ", UseTab: Never, IndentWidth: 4, TabWidth: 4}",
+            -- TODO: do it ig it can be a function
+            -- "--style=file",
+            -- "--fallback-style={"
+            "--style={"
+              .. "BasedOnStyle: LLVM,"
+              .. "Language: Cpp,"
+              .. "Standard: c++23,"
+              .. "ColumnLimit: "
+              .. vim.o.textwidth
+              .. ","
+              .. "UseTab: Never,"
+              .. "IndentWidth: 4,"
+              .. "TabWidth: 4,"
+              .. "AllowShortFunctionsOnASingleLine: None,"
+              .. "}",
           },
         },
       },
@@ -54,8 +67,8 @@ return {
             lsp_format = "fallback",
           })
         end,
-        desc = "Format buffer"
+        desc = "Format buffer",
       },
-    }
+    },
   },
 }

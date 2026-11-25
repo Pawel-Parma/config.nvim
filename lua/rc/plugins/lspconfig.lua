@@ -30,6 +30,11 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       auto = {
+        clangd = {
+          init_options = {
+            fallbackFlags = { "--std=c++23" },
+          },
+        },
         lua_ls = {
           on_init = function(client)
             if client.workspace_folders then

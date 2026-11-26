@@ -29,7 +29,6 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.textwidth = 135
-vim.opt.formatoptions:remove("t")
 
 vim.opt.foldlevel = 9999
 vim.opt.foldlevelstart = 9999

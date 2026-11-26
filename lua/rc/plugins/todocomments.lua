@@ -6,6 +6,6 @@ return {
   opts = {},
   keys = {
     { mode = "n", "<leader>ts", "<cmd>TodoTelescope keywords=TODO,FIX<CR>", desc = "Search TODO/FIX comments" },
-    { mode = "n", "<leader>qt", ":TodoQuickFix<CR>",                        desc = "Open TODOs in quickfix" }
+    { mode = "n", "<leader>qt", ":TodoQuickFix<CR>", desc = "Open TODOs in quickfix" },
   },
 }

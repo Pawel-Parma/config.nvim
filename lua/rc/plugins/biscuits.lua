@@ -9,7 +9,6 @@ return {
       min_distance = 1,
       prefix_string = "",
       show_on_start = false,
-      -- cursor_line_only = true,
       cursor_line_only = false,
     },
   },

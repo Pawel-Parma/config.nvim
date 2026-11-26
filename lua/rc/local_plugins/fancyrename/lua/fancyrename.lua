@@ -133,7 +133,9 @@ local function bind_keymaps(buf, finish)
     if rhs == false then
       return
     end
-    local fn = type(rhs) == "function" and function() rhs(buf, finish) end or rhs
+    local fn = type(rhs) == "function" and function()
+      rhs(buf, finish)
+    end or rhs
 
     vim.keymap.set(mode, lhs, fn, vim.tbl_extend("force", opts or {}, { buffer = buf }))
   end

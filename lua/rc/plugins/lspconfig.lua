@@ -37,21 +37,32 @@ return {
         },
         lua_ls = {
           on_init = function(client)
-            if client.workspace_folders then
-              local path = client.workspace_folders[1].name
-              ---@diagnostic disable-next-line: undefined-field
-              if vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc") then
-                return
-              end
+            if not client.workspace_folders then
+              return
             end
-            client.config.settings.Lua = vim.tbl_deep_extend("force",
-              client.config.settings.Lua, {
-                runtime = { version = "LuaJIT" },
-                workspace = {
-                  checkThirdParty = false,
-                  library = { vim.env.VIMRUNTIME },
-                },
-              })
+
+            local path = client.workspace_folders[1].name
+            local real_path = vim.uv.fs_realpath(path) or path
+            local nvim_config_path = vim.fn.stdpath("config")
+            local real_nvim_config_path = vim.uv.fs_realpath(nvim_config_path) or nvim_config_path
+            if
+              vim.uv.fs_stat(path .. "/.luarc.json")
+              or vim.uv.fs_stat(path .. "/.luarc.jsonc")
+              or not real_path:find(real_nvim_config_path, 1, true)
+            then
+              return
+            end
+
+            client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+              runtime = {
+                version = "LuaJIT",
+                path = { "lua/?.lua", "lua/?/init.lua" },
+              },
+              workspace = {
+                checkThirdParty = false,
+                library = { vim.env.VIMRUNTIME },
+              },
+            })
           end,
           settings = {
             Lua = {
@@ -78,8 +89,8 @@ return {
             parser_install_directories = {
               vim.fn.stdpath("data") .. "/site/parser",
               vim.fn.expand("~/personal/coding/mtl/mtl/grammar"),
-            }
-          }
+            },
+          },
         },
         ts_ls = {
           init_options = {
@@ -90,7 +101,7 @@ return {
           },
           settings = {
             typescript = {
-              format     = {
+              format = {
                 semicolons = "remove",
                 trimTrailingWhitespace = true,
               },
@@ -111,8 +122,8 @@ return {
           settings = {
             yaml = {
               yamlVersion = "1.2.2",
-            }
-          }
+            },
+          },
         },
         zls = {
           settings = {
@@ -122,8 +133,8 @@ return {
               inlay_hints_exclude_single_argument = true,
               inlay_hints_hide_redundant_param_names = true,
               inlay_hints_hide_redundant_param_names_last_token = true,
-            }
-          }
+            },
+          },
         },
       },
       manual = {
@@ -131,7 +142,7 @@ return {
           cmd = { vim.fn.has("win32") == 1 and "ebnfer.exe" or "ebnfer" },
           filetypes = { "ebnf" },
           root_markers = { ".ebnfer-root", ".git" },
-        }
+        },
       },
     },
 
@@ -162,9 +173,14 @@ return {
           local buf = event.buf
 
           vim.lsp.inlay_hint.enable(true, { buffer = buf })
-          vim.keymap.set("n", "<leader>y", function()
-            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { buffer = event.buf })
-          end, { buffer = buf, desc = "Toggle inlay hints" })
+          vim.keymap.set(
+            "n",
+            "<leader>y",
+            function()
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = buf }), { buffer = event.buf })
+            end,
+            { buffer = buf, desc = "Toggle inlay hints" }
+          )
 
           vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = buf, desc = "Go to definition" })
           vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = buf, desc = "Go to declaration" })
@@ -177,9 +193,14 @@ return {
           vim.keymap.set("n", "ca", vim.lsp.buf.code_action, { buffer = buf, desc = "Code action" })
           vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename, { buffer = buf, desc = "Rename" })
 
-          vim.keymap.set("n", { "<leader>qd", "<leader>dq" }, function()
-            vim.diagnostic.setqflist({ open = true })
-          end, { buffer = buf, desc = "Send diagnostics to quickfix" })
+          vim.keymap.set(
+            "n",
+            { "<leader>qd", "<leader>dq" },
+            function()
+              vim.diagnostic.setqflist({ open = true })
+            end,
+            { buffer = buf, desc = "Send diagnostics to quickfix" }
+          )
           vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float, { buffer = buf, desc = "Show line diagnostic" })
         end,
       })

@@ -12,7 +12,7 @@ return {
     },
   },
   keys = {
-    { mode = "n", "<leader>tt", function() require("toggle").toggle() end,     desc = "Toggle value forwards" },
+    { mode = "n", "<leader>tt", function() require("toggle").toggle() end, desc = "Toggle value forwards" },
     { mode = "n", "<leader>tT", function() require("toggle").toggle(true) end, desc = "Toggle value backwards" },
   },
 }

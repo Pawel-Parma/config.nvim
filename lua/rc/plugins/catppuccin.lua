@@ -14,7 +14,7 @@ return {
       return {
         LineNr = { fg = colors.overlay0 },
         MyHeaderHighlight = { fg = colors.blue, bg = "none" }, -- alpha-nvim
-        CompileModeCommandOutput = { fg = colors.pink },       -- compile-mode.nvim
+        CompileModeCommandOutput = { fg = colors.pink }, -- compile-mode.nvim
       }
     end,
   },

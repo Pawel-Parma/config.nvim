@@ -5,15 +5,15 @@ return {
     build = ":TSUpdate",
     lazy = false,
     opts = {
+      -- stylua: ignore start
       "bash",
       "c", "cpp",
       "csv",
       "css", "html", "javascript", "typescript",
       "ebnf",
-      "toml", "xml", "yaml",
-      "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore",
+      "json", "yaml", "toml", "xml",
+      "git_config", "git_rebase", "gitattributes", "gitcommit", "gitignore", "diff",
       "go", "gomod", "gosum",
-      "json",
       "lua", "luadoc",
       "markdown", "markdown_inline",
       "php",
@@ -23,6 +23,7 @@ return {
       "query",
       "vim", "vimdoc",
       "zig",
+      -- stylua: ignore end
     },
     init = function(plugin)
       local mtl_path = vim.fn.expand("~/personal/coding/mtl/mtl/grammar/tree-sitter-mtl")
@@ -37,7 +38,7 @@ return {
                 queries = "queries",
               },
             }
-          end
+          end,
         })
       end
     end,
@@ -73,12 +74,11 @@ return {
           end
 
           vim.schedule(function()
-            vim.ui.select({ "Yes", "No" }, { prompt = "Install treesitter parser for " .. lang .. "?" },
-              function(choice)
-                if choice == "Yes" then
-                  require("nvim-treesitter").install({ lang })
-                end
-              end)
+            vim.ui.select({ "Yes", "No" }, { prompt = "Install treesitter parser for " .. lang .. "?" }, function(choice)
+              if choice == "Yes" then
+                require("nvim-treesitter").install({ lang })
+              end
+            end)
           end)
         end,
       })
@@ -100,21 +100,18 @@ return {
         mode = { "x", "o" },
         "af",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer",
-            "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
         end,
-        desc = "Select outer function"
+        desc = "Select outer function",
       },
       {
         mode = { "x", "o" },
         "if",
         function()
-          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner",
-            "textobjects")
+          require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
         end,
-        desc = "Select inner function"
+        desc = "Select inner function",
       },
     },
-  }
-
+  },
 }

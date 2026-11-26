@@ -1,5 +1,5 @@
 vim.filetype.add({
   extension = {
-    ebnf = "ebnf"
+    ebnf = "ebnf",
   },
 })

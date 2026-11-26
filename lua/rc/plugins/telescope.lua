@@ -33,11 +33,13 @@ return {
       pickers = {
         find_files = {
           find_command = {
+            -- stylua: ignore start
             "rg", "--files",
             "--hidden",
             "--glob", "!**/.git",
             "--glob", "!**/venv/*",
             "--glob", "!**/.venv/*",
+            -- stylua: ignore end
           },
         },
       },
@@ -46,7 +48,7 @@ return {
         ["ui-select"] = {
           themes.get_dropdown({}),
         },
-      }
+      },
     }
   end,
   init = function()
@@ -58,20 +60,20 @@ return {
   end,
   keys = {
     { mode = "n", "<leader>fe", "<cmd>Telescope find_files<CR>", desc = "Find files" },
-    { mode = "n", "<leader>fs", "<cmd>Telescope live_grep<CR>",  desc = "Live grep" },
-    { mode = "n", "<leader>fh", "<cmd>Telescope help_tags<CR>",  desc = "Find Help tags" },
-    { mode = "n", "<leader>fk", "<cmd>Telescope keymaps<CR>",    desc = "Find keymaps" },
+    { mode = "n", "<leader>fs", "<cmd>Telescope live_grep<CR>", desc = "Live grep" },
+    { mode = "n", "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Find Help tags" },
+    { mode = "n", "<leader>fk", "<cmd>Telescope keymaps<CR>", desc = "Find keymaps" },
     {
       mode = "n",
       "<leader>en",
       function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end,
-      desc = "Find nvim files"
+      desc = "Find nvim files",
     },
     {
       mode = "n",
       "<leader>ed",
       function() require("telescope.builtin").find_files({ cwd = vim.fn.expand("~/.dotfiles") }) end,
-      desc = "Find nvim files"
+      desc = "Find nvim files",
     },
   },
   config = function(_, opts)

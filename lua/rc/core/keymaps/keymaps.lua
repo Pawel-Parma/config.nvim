@@ -5,7 +5,7 @@ vim.keymap.set("n", "<leader>b", ":silent! buffer #<CR>", { desc = "Switch to al
 
 vim.keymap.set("x", "<leader>/", function()
   vim.cmd("normal \"zy")
-  local content = vim.fn.getreg('z')
+  local content = vim.fn.getreg("z")
   if content == "" then return end
-  vim.fn.setreg('/', "\\V" .. vim.fn.escape(content, [[\/]]))
+  vim.fn.setreg("/", "\\V" .. vim.fn.escape(content, [[\/]]))
 end, { desc = "Set search register to visual selection" })

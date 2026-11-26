@@ -12,9 +12,8 @@ return {
       "<leader>th",
       function()
         require("hardtime").toggle()
-      end
-      ,
-      desc = "Toggle hardtime.nvim"
+      end,
+      desc = "Toggle hardtime.nvim",
     },
   },
 }
